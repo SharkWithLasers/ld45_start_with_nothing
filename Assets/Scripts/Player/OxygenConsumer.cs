@@ -25,4 +25,9 @@ public class OxygenConsumer : MonoBehaviour
             Debug.Log("ran outta oxy yo");
         }
     }
+
+    public void OnOxygenPickedUp(float amt)
+    {
+        oxygenLeft.Value += amt;
+    }
 }

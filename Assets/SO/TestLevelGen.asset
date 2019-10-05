@@ -28,7 +28,7 @@ MonoBehaviour:
     _useConstant: 1
     _constantValue: 4
     _variable: {fileID: 0}
-  planetPrefab: {fileID: 1870678925238945421, guid: cab1b0ac5eb754f2991f35577a52c640,
+  planetPrefab: {fileID: 653251084998193093, guid: c9ecbfd16c8b840a98e2c6348b3a3a4c,
     type: 3}
   oxytankPrefab: {fileID: 1459433973913705459, guid: 1adc5d8235caf4d65adf6ee5f97d17e8,
     type: 3}

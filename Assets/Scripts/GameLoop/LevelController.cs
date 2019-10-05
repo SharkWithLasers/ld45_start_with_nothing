@@ -6,6 +6,8 @@ public class LevelController : MonoBehaviour
 {
     [SerializeField] private LevelGenerator levelGen;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +18,11 @@ public class LevelController : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+    public void OnPlanetReached()
+    {
+        Debug.Log("ayy you win yahoooo");
     }
 }

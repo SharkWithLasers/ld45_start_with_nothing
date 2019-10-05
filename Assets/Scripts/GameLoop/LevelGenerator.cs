@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using ScriptableObjectArchitecture;
 using UnityEngine;
@@ -33,16 +32,14 @@ public class LevelGenerator : ScriptableObject
 
     [SerializeField] private FloatReference oxytankSeconds;
 
-    [SerializeField] public List<PickupItem> pickupItems; 
+    //[SerializeField] public List<PickupItem> pickupItems; 
 
-    //private Dictionary<>
 
     private float distanceToOxyTank;
 
     public void OnEnable()
     {
-        pickupItems = new List<PickupItem>();
-        //Debug.Log(distanceToOxyTank);
+        //pickupItems = new List<PickupItem>();
     }
 
     public void GenerateLevel()
@@ -51,22 +48,30 @@ public class LevelGenerator : ScriptableObject
 
 
         // start fuel...
-        var curPosition = new Vector2(10, 0);
+        var curPosition = new Vector3(10, 0, 1);
 
         for (var i = 0; i < numOxytankDistanceToGoal.Value; i++)
         {
             var direction = new Vector2(Random.value, Random.value).normalized;
 
-            var nextOxyTankLocation = curPosition + direction * distanceToOxyTank;
+            var nextOxyTankLocation = curPosition + (Vector3) direction * distanceToOxyTank;
 
-            Instantiate(oxytankPrefab, nextOxyTankLocation, Quaternion.identity);
+            var oxyTankGO = Instantiate(oxytankPrefab, nextOxyTankLocation, Quaternion.identity);
+            oxyTankGO.GetComponent<Pickupable>().pickupAmt = oxytankSeconds.Value;
+            /*
             pickupItems.Add(new PickupItem
             {
                 pickupType = PickupType.OxyTank,
                 pickupPosition = nextOxyTankLocation
-            });
+            });*/
+
             curPosition = nextOxyTankLocation;
         }
 
+        var nextDir = new Vector2(Random.value, Random.value).normalized;
+
+        var planetLocation = curPosition + (Vector3) nextDir * distanceToOxyTank;
+
+        Instantiate(planetPrefab, planetLocation, Quaternion.identity);
     }
 }

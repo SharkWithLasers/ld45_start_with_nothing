@@ -83,15 +83,13 @@ public class PlayerMovementInput : MonoBehaviour
         var inputVec = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical"));
-        //var horzInput = Input.GetAxisRaw("Horizontal");
-        //var vertInput = Input.GetAxisRaw("Vertical");
 
         var acceleratePressed = Input.GetButtonDown("Accelerate");
         var accelerateHeld = Input.GetButton("Accelerate");
 
         var inputHeld = inputVec.sqrMagnitude > 0f;
 
-        if (accelerateHeld && fuelInUnits > 0f)
+        if (accelerateHeld && fuelInSeconds > 0f)
         {
             var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
                 || Input.GetButtonDown("Left") || Input.GetButtonDown("Down");
