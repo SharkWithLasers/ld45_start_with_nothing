@@ -24,12 +24,14 @@ public class PlayerMovementInput : MonoBehaviour
     [SerializeField] private FloatReference maxDriftSpeed;
 
     [SerializeField] private FloatReference acuteDirectionRatio;
-
+    private float mostRecentHorzX;
+    private Option<Vector2> prevDirection = Option<Vector2>.None;
 
     // Start is called before the first frame update
     void Start()
     {
         movementController = GetComponent<MovementController>();
+        mostRecentHorzX = 1f;
         currentPlayerDriftVelocity.Value = initialDriftVelocity;
     }
 
@@ -75,28 +77,52 @@ public class PlayerMovementInput : MonoBehaviour
 
     private void DriftModeFlow()
     {
-        var horzInput = Input.GetAxisRaw("Horizontal");
-        var vertInput = Input.GetAxisRaw("Vertical");
 
-        var inputHeld = horzInput != 0f || vertInput != 0f;
+        var inputVec = new Vector2(
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical"));
+        //var horzInput = Input.GetAxisRaw("Horizontal");
+        //var vertInput = Input.GetAxisRaw("Vertical");
 
-        if (inputHeld && fuelInUnits > 0f)
+        var acceleratePressed = Input.GetButtonDown("Accelerate");
+        var accelerateHeld = Input.GetButton("Accelerate");
+
+        var inputHeld = inputVec.sqrMagnitude > 0f;
+
+        if (accelerateHeld && fuelInUnits > 0f)
         {
             var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
                 || Input.GetButtonDown("Left") || Input.GetButtonDown("Down");
-            
+
             /*var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
                 || Input.GetButtonDown("Left") || Input.GetButtonDown("Down") ||
                 Input.GetButtonUp("Up") || Input.GetButtonUp("Right")
                 || Input.GetButtonUp("Left") || Input.GetButtonUp("Down");*/
 
-            var unitDirection = new Vector2(horzInput, vertInput).normalized;
+            var unitDirection = inputHeld
+                ? inputVec.normalized
+                : new Vector2(mostRecentHorzX, 0f);
 
-            if (inputPressed)
+            if (acceleratePressed)
             {
-                var driftSpeedToUse = Vector2.Dot(unitDirection, currentPlayerDriftVelocity.Value) <= 0f
+                var dotProd = Vector2.Dot(unitDirection, currentPlayerDriftVelocity.Value);
+
+
+                var driftSpeedToUse = Mathf.Approximately(dotProd, 1f)
+                    ? currentPlayerDriftVelocity.Value.magnitude
+                    : dotProd > 0
+                        ? currentPlayerDriftVelocity.Value.magnitude * acuteDirectionRatio
+                        : minDriftSpeed;
+
+                /*var dotProd = !prevDirection.HasValue
                     ? minDriftSpeed
-                    : currentPlayerDriftVelocity.Value.magnitude * acuteDirectionRatio;
+                    : Vector2.Dot(inputVec, prevDirection.Value);
+
+                var driftSpeedToUse = dotProd == 1
+                    ? currentPlayerDriftVelocity.Value.magnitude
+                    : dotProd > 0
+                        ? currentPlayerDriftVelocity.Value.magnitude * acuteDirectionRatio
+                        : minDriftSpeed;*/
 
                 currentPlayerDriftVelocity.Value = unitDirection * driftSpeedToUse;
             }
@@ -110,6 +136,14 @@ public class PlayerMovementInput : MonoBehaviour
             fuelInUnits.Value = Mathf.Max(0f, fuelInUnits.Value - accelerationToUse);
 
         }
+
+        mostRecentHorzX = Mathf.Approximately(inputVec.x, 0f)
+            ? mostRecentHorzX
+            : inputVec.x;
+
+        prevDirection = inputHeld
+            ? inputVec
+            : prevDirection;
 
         var displacement = currentPlayerDriftVelocity.Value * Time.deltaTime;
         transform.Translate(displacement);
