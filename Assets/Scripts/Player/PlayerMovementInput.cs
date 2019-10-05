@@ -23,6 +23,8 @@ public class PlayerMovementInput : MonoBehaviour
     [SerializeField] private FloatReference minDriftSpeed;
     [SerializeField] private FloatReference maxDriftSpeed;
 
+    [SerializeField] private FloatReference acuteDirectionRatio;
+
 
     // Start is called before the first frame update
     void Start()
@@ -73,13 +75,8 @@ public class PlayerMovementInput : MonoBehaviour
 
     private void DriftModeFlow()
     {
-
-
         var horzInput = Input.GetAxisRaw("Horizontal");
         var vertInput = Input.GetAxisRaw("Vertical");
-
-        //Debug.Log($"horzInput: {horzInput}..vertInput: {vertInput}");
-
 
         var inputHeld = horzInput != 0f || vertInput != 0f;
 
@@ -87,20 +84,24 @@ public class PlayerMovementInput : MonoBehaviour
         {
             var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
                 || Input.GetButtonDown("Left") || Input.GetButtonDown("Down");
+            
+            /*var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
+                || Input.GetButtonDown("Left") || Input.GetButtonDown("Down") ||
+                Input.GetButtonUp("Up") || Input.GetButtonUp("Right")
+                || Input.GetButtonUp("Left") || Input.GetButtonUp("Down");*/
 
             var unitDirection = new Vector2(horzInput, vertInput).normalized;
-            var normalizedCurVelocity = currentPlayerDriftVelocity.Value.normalized;
 
-            //if (inputPressed && (unitDirection != normalizedCurVelocity))
             if (inputPressed)
             {
-                currentPlayerDriftVelocity.Value = unitDirection * minDriftSpeed;
+                var driftSpeedToUse = Vector2.Dot(unitDirection, currentPlayerDriftVelocity.Value) <= 0f
+                    ? minDriftSpeed
+                    : currentPlayerDriftVelocity.Value.magnitude * acuteDirectionRatio;
+
+                currentPlayerDriftVelocity.Value = unitDirection * driftSpeedToUse;
             }
 
-            Debug.Log($"driftAccelTDT: {driftAcceleration * Time.deltaTime}");
-
             var accelerationToUse = Mathf.Min(fuelInUnits, driftAcceleration * Time.deltaTime);
-            Debug.Log($"accelerationToUse: {accelerationToUse}");
 
             currentPlayerDriftVelocity.Value = Vector2.ClampMagnitude(
                 currentPlayerDriftVelocity + unitDirection * accelerationToUse,
