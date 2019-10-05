@@ -1,0 +1,1 @@
+# ld45_start_with_nothing
