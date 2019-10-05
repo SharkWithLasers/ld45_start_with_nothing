@@ -11,6 +11,8 @@ public class PlayerMovementInput : MonoBehaviour
     [SerializeField] private FloatReference moveSpeed;
     [SerializeField] private FloatReference fuelInUnits;
 
+    [SerializeField] private FloatReference fuelInSeconds;
+
     [SerializeField] private BoolReference useDriftMode;
 
     private MovementController movementController;
@@ -81,15 +83,13 @@ public class PlayerMovementInput : MonoBehaviour
         var inputVec = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical"));
-        //var horzInput = Input.GetAxisRaw("Horizontal");
-        //var vertInput = Input.GetAxisRaw("Vertical");
 
         var acceleratePressed = Input.GetButtonDown("Accelerate");
         var accelerateHeld = Input.GetButton("Accelerate");
 
         var inputHeld = inputVec.sqrMagnitude > 0f;
 
-        if (accelerateHeld && fuelInUnits > 0f)
+        if (accelerateHeld && fuelInSeconds > 0f)
         {
             var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
                 || Input.GetButtonDown("Left") || Input.GetButtonDown("Down");
@@ -107,7 +107,6 @@ public class PlayerMovementInput : MonoBehaviour
             if (acceleratePressed || inputPressed)
             {
                 var dotProd = Vector2.Dot(unitDirection, currentPlayerDriftVelocity.Value.normalized);
-                Debug.Log($"dotPRod: {dotProd}");
 
                 var driftSpeedToUse = Mathf.Approximately(dotProd, 1f)
                     ? currentPlayerDriftVelocity.Value.magnitude
@@ -115,27 +114,25 @@ public class PlayerMovementInput : MonoBehaviour
                         ? currentPlayerDriftVelocity.Value.magnitude * acuteDirectionRatio
                         : Mathf.Approximately(dotProd, 0f) ? currentPlayerDriftVelocity.Value.magnitude * 0.5f : minDriftSpeed;
 
-                /*var dotProd = !prevDirection.HasValue
-                    ? minDriftSpeed
-                    : Vector2.Dot(inputVec, prevDirection.Value);
-
-                var driftSpeedToUse = dotProd == 1
-                    ? currentPlayerDriftVelocity.Value.magnitude
-                    : dotProd > 0
-                        ? currentPlayerDriftVelocity.Value.magnitude * acuteDirectionRatio
-                        : minDriftSpeed;*/
 
                 currentPlayerDriftVelocity.Value = unitDirection * driftSpeedToUse;
             }
 
-            var accelerationToUse = Mathf.Min(fuelInUnits, driftAcceleration * Time.deltaTime);
+            // average turn is 0.25 seconds?
+            // average acceleration turn might be change of 5 / 5 ... 1 second?
+
+            var fuelToUse = Mathf.Min(fuelInSeconds.Value, Time.deltaTime);
+            var changeInVelocity = unitDirection * driftAcceleration.Value * fuelToUse;
 
             currentPlayerDriftVelocity.Value = Vector2.ClampMagnitude(
-                currentPlayerDriftVelocity + unitDirection * accelerationToUse,
+                currentPlayerDriftVelocity + changeInVelocity,
                 maxDriftSpeed);
 
-            fuelInUnits.Value = Mathf.Max(0f, fuelInUnits.Value - accelerationToUse);
-
+            fuelInSeconds.Value = Mathf.Max(0f, fuelInSeconds.Value - fuelToUse);
+            if (Mathf.Approximately(fuelInSeconds.Value, 0f))
+            {
+                Debug.Log("fuel is gone");
+            }
         }
 
         mostRecentHorzX = Mathf.Approximately(inputVec.x, 0f)
@@ -155,6 +152,7 @@ public class PlayerMovementInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             fuelInUnits.Value += 1000f;
+            fuelInSeconds.Value += 5f;
         }
     }
 }

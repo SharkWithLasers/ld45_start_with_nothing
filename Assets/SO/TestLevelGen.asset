@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8daea94313d4973bc8f593ff6c8629, type: 3}
+  m_Name: TestLevelGen
+  m_EditorClassIdentifier: 
+  assumedVelocity:
+    _useConstant: 0
+    _constantValue: 0
+    _variable: {fileID: 0}
+  driftAcceleration:
+    _useConstant: 0
+    _constantValue: 0
+    _variable: {fileID: 0}
+  assumedMinAvgVelocityBetweenOxygenTanks:
+    _useConstant: 1
+    _constantValue: 1
+    _variable: {fileID: 0}
+  numOxytankDistanceToGoal:
+    _useConstant: 1
+    _constantValue: 4
+    _variable: {fileID: 0}
+  planetPrefab: {fileID: 653251084998193093, guid: c9ecbfd16c8b840a98e2c6348b3a3a4c,
+    type: 3}
+  oxytankPrefab: {fileID: 1459433973913705459, guid: 1adc5d8235caf4d65adf6ee5f97d17e8,
+    type: 3}
+  fuelPrefab: {fileID: 6369474011399188711, guid: e0ac2b7a5998945faba8e59f24bbb3df,
+    type: 3}
+  oxytankSeconds:
+    _useConstant: 1
+    _constantValue: 30
+    _variable: {fileID: 0}
