@@ -94,6 +94,7 @@ public class PlayerMovementInput : MonoBehaviour
             var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
                 || Input.GetButtonDown("Left") || Input.GetButtonDown("Down");
 
+            // once reason for weirdness is that when this is pressed before accelerate removed, shit gets weird
             /*var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
                 || Input.GetButtonDown("Left") || Input.GetButtonDown("Down") ||
                 Input.GetButtonUp("Up") || Input.GetButtonUp("Right")
@@ -103,16 +104,16 @@ public class PlayerMovementInput : MonoBehaviour
                 ? inputVec.normalized
                 : new Vector2(mostRecentHorzX, 0f);
 
-            if (acceleratePressed)
+            if (acceleratePressed || inputPressed)
             {
-                var dotProd = Vector2.Dot(unitDirection, currentPlayerDriftVelocity.Value);
-
+                var dotProd = Vector2.Dot(unitDirection, currentPlayerDriftVelocity.Value.normalized);
+                Debug.Log($"dotPRod: {dotProd}");
 
                 var driftSpeedToUse = Mathf.Approximately(dotProd, 1f)
                     ? currentPlayerDriftVelocity.Value.magnitude
-                    : dotProd > 0
+                    : dotProd > 0f
                         ? currentPlayerDriftVelocity.Value.magnitude * acuteDirectionRatio
-                        : minDriftSpeed;
+                        : Mathf.Approximately(dotProd, 0f) ? currentPlayerDriftVelocity.Value.magnitude * 0.5f : minDriftSpeed;
 
                 /*var dotProd = !prevDirection.HasValue
                     ? minDriftSpeed

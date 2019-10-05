@@ -224,7 +224,7 @@ MonoBehaviour:
     _variable: {fileID: 11400000, guid: 242527763f2cf4bc8aa7b2a54387dd22, type: 2}
   parallaxRatio:
     _useConstant: 1
-    _constantValue: 0.025
+    _constantValue: 0.01
     _variable: {fileID: 0}
 --- !u!1 &87681656
 GameObject:
@@ -330,7 +330,7 @@ MonoBehaviour:
     _variable: {fileID: 11400000, guid: 242527763f2cf4bc8aa7b2a54387dd22, type: 2}
   parallaxRatio:
     _useConstant: 1
-    _constantValue: 0.1
+    _constantValue: 0.075
     _variable: {fileID: 0}
 --- !u!1001 &565552255
 PrefabInstance:
@@ -917,7 +917,7 @@ MonoBehaviour:
     _variable: {fileID: 11400000, guid: 242527763f2cf4bc8aa7b2a54387dd22, type: 2}
   parallaxRatio:
     _useConstant: 1
-    _constantValue: 0.2
+    _constantValue: 0.15
     _variable: {fileID: 0}
 --- !u!1 &1937361179
 GameObject:
