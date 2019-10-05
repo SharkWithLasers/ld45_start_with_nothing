@@ -8,6 +8,9 @@ public class ParallaxScroller : MonoBehaviour
     // TODO, if I decide to make this an exploration game thingy...use current velocity of ship
     [SerializeField] private FloatReference focalPointSpeed;
 
+    [SerializeField] private Vector2Reference currentDriftVelocity;
+    [SerializeField] private Vector3Reference cameraSmoothVelocity;
+
     [SerializeField] private FloatReference parallaxRatio;
 
     private MeshRenderer meshRenderer;
@@ -22,8 +25,10 @@ public class ParallaxScroller : MonoBehaviour
     void Update()
     {
         var texOffset = meshRenderer.material.mainTextureOffset;
-
-        texOffset.x += Time.deltaTime * (focalPointSpeed * parallaxRatio);
+        texOffset += (currentDriftVelocity.Value + (Vector2) cameraSmoothVelocity.Value)
+            * Time.deltaTime
+            * parallaxRatio;
+        //texOffset.x += Time.deltaTime * (focalPointSpeed * parallaxRatio);
 
         meshRenderer.material.mainTextureOffset = texOffset;
     }
