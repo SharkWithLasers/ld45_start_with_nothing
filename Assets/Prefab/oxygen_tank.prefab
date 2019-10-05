@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1459433973913705458}
-  - component: {fileID: 1459433973913705457}
   m_Layer: 0
   m_Name: oxygen_tank
   m_TagString: Untagged
@@ -32,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1459433973913705457
+--- !u!114 &6033296435499560959
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1459433973913705459}
+  m_GameObject: {fileID: 7449268664131874466}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18acc21bb1212442b9f5cdbc639423d3, type: 3}
@@ -48,7 +47,8 @@ MonoBehaviour:
     _useConstant: 1
     _constantValue: 75
     _variable: {fileID: 0}
-  rotateAround: {x: 0.5, y: 0.5, z: 0.5}
+  rotateAround: {x: 0, y: 1, z: 0}
+  useRandomRotation: 1
 --- !u!1001 &1459433974849353643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -133,6 +133,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a38b13d578f094c07a3aa0851ae85521, type: 3}
+--- !u!1 &7449268664131874466 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: a38b13d578f094c07a3aa0851ae85521,
+    type: 3}
+  m_PrefabInstance: {fileID: 1459433974849353643}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5853069526648855729 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: a38b13d578f094c07a3aa0851ae85521,

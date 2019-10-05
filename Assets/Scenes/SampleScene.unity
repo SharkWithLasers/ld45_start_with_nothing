@@ -226,6 +226,50 @@ MonoBehaviour:
     _useConstant: 1
     _constantValue: 0.01
     _variable: {fileID: 0}
+--- !u!1 &48504352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 48504353}
+  - component: {fileID: 48504354}
+  m_Layer: 0
+  m_Name: LevelGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &48504353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48504352}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &48504354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 48504352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177bdbfcff4824a9180b1c39e1b6a987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelGen: {fileID: 11400000, guid: b660be007deb74a48b89d62aa82138f1, type: 2}
 --- !u!1 &87681656
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,6 +376,54 @@ MonoBehaviour:
     _useConstant: 1
     _constantValue: 0.075
     _variable: {fileID: 0}
+--- !u!1 &292286663 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7449268664131874466, guid: 1adc5d8235caf4d65adf6ee5f97d17e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1459433974922591719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &292286665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292286663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18acc21bb1212442b9f5cdbc639423d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupRotationSpeed:
+    _useConstant: 1
+    _constantValue: 75
+    _variable: {fileID: 0}
+  rotateAround: {x: 0.5, y: 0.5, z: 0.5}
+  useRandomRotation: 1
+--- !u!1 &501235257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3117906887918814197, guid: e0ac2b7a5998945faba8e59f24bbb3df,
+    type: 3}
+  m_PrefabInstance: {fileID: 6369474011539241337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &501235259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501235257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18acc21bb1212442b9f5cdbc639423d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupRotationSpeed:
+    _useConstant: 1
+    _constantValue: 75
+    _variable: {fileID: 0}
+  rotateAround: {x: 0.75, y: 0.5, z: 0.25}
+  useRandomRotation: 1
 --- !u!1001 &565552255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -646,6 +738,7 @@ GameObject:
   - component: {fileID: 1133085263}
   - component: {fileID: 1133085262}
   - component: {fileID: 1133085264}
+  - component: {fileID: 1133085258}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -653,6 +746,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1133085258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133085257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4151ef9d90e5f437099aa2970679fc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oxygenLeft:
+    _useConstant: 0
+    _constantValue: 0
+    _variable: {fileID: 11400000, guid: 87f4a6691fce043e1826bc133b19cf80, type: 2}
+  initialOxygen: 30
 --- !u!4 &1133085261
 Transform:
   m_ObjectHideFlags: 0
@@ -706,6 +816,10 @@ MonoBehaviour:
     _useConstant: 0
     _constantValue: 0
     _variable: {fileID: 11400000, guid: aec847b00443a4fffb646c1b82dadb7f, type: 2}
+  fuelInSeconds:
+    _useConstant: 0
+    _constantValue: 0
+    _variable: {fileID: 11400000, guid: 13cd5489b61d5483ca90628f707340ba, type: 2}
   useDriftMode:
     _useConstant: 0
     _constantValue: 0
@@ -738,7 +852,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133085257}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 908cafaa26dfd47eda1a59deb59776e2, type: 3}
   m_Name: 
@@ -964,6 +1078,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: oxygen_tank
       objectReference: {fileID: 0}
+    - target: {fileID: 1459433973913705459, guid: 1adc5d8235caf4d65adf6ee5f97d17e8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1459433973913705458, guid: 1adc5d8235caf4d65adf6ee5f97d17e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1032,6 +1151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: gas_tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369474011399188711, guid: e0ac2b7a5998945faba8e59f24bbb3df,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6369474011399188697, guid: e0ac2b7a5998945faba8e59f24bbb3df,
         type: 3}
