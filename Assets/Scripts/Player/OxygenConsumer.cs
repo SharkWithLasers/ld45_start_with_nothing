@@ -6,6 +6,7 @@ using UnityEngine;
 public class OxygenConsumer : MonoBehaviour
 {
     [SerializeField] private FloatReference oxygenLeft;
+    [SerializeField] private FloatReference maxOxygen;
 
     [SerializeField] private float initialOxygen = 30f;
 
@@ -28,6 +29,6 @@ public class OxygenConsumer : MonoBehaviour
 
     public void OnOxygenPickedUp(float amt)
     {
-        oxygenLeft.Value += amt;
+        oxygenLeft.Value  = Mathf.Min(maxOxygen, oxygenLeft.Value +  amt);
     }
 }

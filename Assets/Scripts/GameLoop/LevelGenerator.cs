@@ -57,7 +57,7 @@ public class LevelGenerator : ScriptableObject
             var nextOxyTankLocation = curPosition + (Vector3) direction * distanceToOxyTank;
 
             var oxyTankGO = Instantiate(oxytankPrefab, nextOxyTankLocation, Quaternion.identity);
-            oxyTankGO.GetComponent<Pickupable>().pickupAmt = oxytankSeconds.Value;
+            //oxyTankGO.GetComponent<Pickupable>().pickupAmt = oxytankSeconds.Value;
             /*
             pickupItems.Add(new PickupItem
             {
