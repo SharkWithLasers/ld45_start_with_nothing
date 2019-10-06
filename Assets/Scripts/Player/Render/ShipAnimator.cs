@@ -12,7 +12,7 @@ public class ShipAnimator : MonoBehaviour
 
     [SerializeField] private float xRotRange = 30;
     [SerializeField] private float zRotRange = 5;
-
+    [SerializeField] private float pureVertZRotRatio = 4;
     private Dictionary<Vector2, Vector3> velocityDirToTargetRotation;
 
 
@@ -36,8 +36,9 @@ public class ShipAnimator : MonoBehaviour
         var horzInput = Input.GetAxisRaw("Horizontal");
         var vertInput = Input.GetAxisRaw("Vertical");
 
+        var hasHorzInput = !Mathf.Approximately(horzInput, 0f);
 
-        var horzSign = !Mathf.Approximately(horzInput, 0f)
+        var horzSign = hasHorzInput
             ? horzInput
             : prevHorzNonzeroInput.HasValue
                 ? prevHorzNonzeroInput.Value
@@ -57,7 +58,14 @@ public class ShipAnimator : MonoBehaviour
 
         if (velocityDirToTargetRotation.ContainsKey(velocitySign))
         {
-            transform.localRotation = Quaternion.Euler(velocityDirToTargetRotation[velocitySign]);
+            var rotationToUse = velocityDirToTargetRotation[velocitySign];
+            if (!hasHorzInput)
+            {
+                rotationToUse.z *= pureVertZRotRatio;
+            }
+
+
+            transform.localRotation = Quaternion.Euler(rotationToUse);
         }
         else
         {

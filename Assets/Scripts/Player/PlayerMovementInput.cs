@@ -9,14 +9,10 @@ public class PlayerMovementInput : MonoBehaviour
     [SerializeField] private BoolReference inDebugMode;
 
     [SerializeField] private FloatReference moveSpeed;
-    [SerializeField] private FloatReference fuelInUnits;
 
     [SerializeField] private FloatReference fuelInSeconds;
 
     [SerializeField] private BoolReference useDriftMode;
-
-    private MovementController movementController;
-
 
     [SerializeField] private FloatReference driftAcceleration;
     [SerializeField] private Vector2 initialDriftVelocity;
@@ -32,7 +28,6 @@ public class PlayerMovementInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        movementController = GetComponent<MovementController>();
         mostRecentHorzX = 1f;
         currentPlayerDriftVelocity.Value = initialDriftVelocity;
     }
@@ -45,36 +40,7 @@ public class PlayerMovementInput : MonoBehaviour
             DebugFlow();
         }
 
-
-        if (useDriftMode)
-        {
-            DriftModeFlow();
-        }
-
-        else
-        {
-            ShmupFlow();
-        }
-    }
-
-    private void ShmupFlow()
-    {
-        var horzInput = Input.GetAxisRaw("Horizontal");
-        var vertInput = Input.GetAxisRaw("Vertical");
-        if (horzInput == 0f && vertInput == 0f)
-        {
-            return;
-        }
-
-        var unclampedDisplacement = new Vector2(
-            horzInput,
-            vertInput).normalized * moveSpeed * Time.deltaTime;
-
-        var clampedDisplacement = Vector2.ClampMagnitude(unclampedDisplacement, fuelInUnits);
-
-        movementController.TryDisplace(clampedDisplacement, transform);
-
-        fuelInUnits.Value = Mathf.Max(0f, fuelInUnits.Value - clampedDisplacement.magnitude);
+        DriftModeFlow();
     }
 
     private void DriftModeFlow()
@@ -151,7 +117,6 @@ public class PlayerMovementInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            fuelInUnits.Value += 1000f;
             fuelInSeconds.Value += 5f;
         }
     }

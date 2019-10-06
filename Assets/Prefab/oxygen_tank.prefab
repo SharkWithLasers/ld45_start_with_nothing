@@ -73,7 +73,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPickedUpEvent: {fileID: 11400000, guid: 7e39b186d54ac44f088bf2da5809782a, type: 2}
-  pickupAmt: 0
+  pickupAmt:
+    _useConstant: 0
+    _constantValue: 0
+    _variable: {fileID: 11400000, guid: 572f3d3f7a36149f890ae167c8d312e1, type: 2}
 --- !u!1 &3881224805329647623
 GameObject:
   m_ObjectHideFlags: 0

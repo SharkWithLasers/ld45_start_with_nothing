@@ -8,7 +8,7 @@ public class Pickupable : MonoBehaviour
 {
     [SerializeField] private FloatGameEvent itemPickedUpEvent;
 
-    public float pickupAmt;
+    [SerializeField] private FloatReference pickupAmt;
     private BoxCollider2D _bc;
 
     // Start is called before the first frame update
