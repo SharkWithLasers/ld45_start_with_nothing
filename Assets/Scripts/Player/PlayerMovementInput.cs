@@ -24,6 +24,9 @@ public class PlayerMovementInput : MonoBehaviour
     [SerializeField] private ParticleSystem thrusterPS;
 
     [SerializeField] private FloatReference acuteDirectionRatio;
+
+    [SerializeField] private GameEvent fuelDepletedEvent;
+
     private float mostRecentHorzX;
     private Option<Vector2> prevDirection = Option<Vector2>.None;
 
@@ -109,6 +112,7 @@ public class PlayerMovementInput : MonoBehaviour
             if (Mathf.Approximately(fuelInSeconds.Value, 0f))
             {
                 Debug.Log("fuel is gone");
+                fuelDepletedEvent.Raise();
             }
         }
         else
