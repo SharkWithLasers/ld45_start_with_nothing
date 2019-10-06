@@ -38,13 +38,13 @@ public class LevelController : MonoBehaviour
 
     private void Start()
     {
-        StartLevel();
+        StartLevel(Option<bool>.None);
     }
 
     // Start is called before the first frame update
-    void StartLevel(bool shouldBeEasier = false)
+    void StartLevel(Option<bool> shouldBeEasier)
     {
-        levelGen.GenerateLevel(player, mmCamera);
+        levelGen.GenerateLevel(player, mmCamera, shouldBeEasier);
 
         //set player to proper place (perhaps this should be in player script lol, or levelGen?)
 
@@ -53,7 +53,7 @@ public class LevelController : MonoBehaviour
         LevelStartedEvent.Raise();
     }
 
-    void StartNewLevel(bool shouldBeEasier = false)
+    void StartNextLevel(bool shouldBeEasier = false)
     {
         // fadeout animation
 
@@ -66,12 +66,12 @@ public class LevelController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R) && curState == LevelState.LevelLost)
         {
-            StartNewLevel(shouldBeEasier: true);
+            StartNextLevel(shouldBeEasier: true);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && curState == LevelState.LevelWon)
         {
-            StartNewLevel(shouldBeEasier: false);
+            StartNextLevel(shouldBeEasier: false);
         }
     }
 

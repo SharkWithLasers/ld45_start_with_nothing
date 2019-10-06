@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8daea94313d4973bc8f593ff6c8629, type: 3}
   m_Name: TestLevelGen
   m_EditorClassIdentifier: 
-  isDebug: 1
+  isDebug: 0
   planetPrefab: {fileID: 653251084998193093, guid: c9ecbfd16c8b840a98e2c6348b3a3a4c,
     type: 3}
   oxytankPrefab: {fileID: 1459433973913705459, guid: 1adc5d8235caf4d65adf6ee5f97d17e8,
@@ -24,7 +24,13 @@ MonoBehaviour:
   - {fileID: 7677616834605869986, guid: e8b3d0da6da2947af996f8304a8b9e50, type: 3}
   - {fileID: 48776611311074511, guid: a1861ac3d448b4f69a530dcfef7e4387, type: 3}
   debugMainAsteroidFieldSize: {x: 300, y: 300}
-  debugPlayerStartPoint: {x: -17.5, y: 0}
+  debugPlayerStartPoint: {x: -20, y: 0}
   asteroidsDebugNum: 1000
   gasTanksDebugNum: 25
   oxyTanksDebugNum: 25
+  initialDifficultySettings:
+    asteroidFieldSize: 300
+    playerStartPointX: -17.5
+    numAsteroids: 750
+    numGasTanks: 40
+    numOxyTanks: 40
