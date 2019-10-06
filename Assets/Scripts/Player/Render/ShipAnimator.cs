@@ -15,7 +15,7 @@ public class ShipAnimator : MonoBehaviour
     [SerializeField] private float pureVertZRotRatio = 4;
 
     [SerializeField] private ParticleSystem deathPS;
-    [SerializeField] private GameObject shipModel;
+    [SerializeField] private GameObject shipRender;
 
 
     private Dictionary<Vector2, Vector3> velocityDirToTargetRotation;
@@ -76,7 +76,7 @@ public class ShipAnimator : MonoBehaviour
             }
 
 
-            transform.localRotation = Quaternion.Euler(rotationToUse);
+            shipRender.transform.localRotation = Quaternion.Euler(rotationToUse);
         }
         else
         {
@@ -96,7 +96,7 @@ public class ShipAnimator : MonoBehaviour
     {
 
         levelRunning = false;
-        shipModel.SetActive(false);
+        shipRender.SetActive(false);
 
         deathPS.Play();
 
@@ -105,7 +105,7 @@ public class ShipAnimator : MonoBehaviour
 
     public void OnLevelStarted()
     {
-        shipModel.SetActive(true);
+        shipRender.SetActive(true);
 
         levelRunning = true;
         prevHorzNonzeroInput = Option<float>.None;

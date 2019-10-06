@@ -9,6 +9,10 @@ public class AudioController : MonoBehaviour
 
     [SerializeField] private AudioClip fuelTankDepletedClip;
     [SerializeField] private AudioClip oxyTankDepletedClip;
+    [SerializeField] private AudioClip asteroidHitClip;
+    [SerializeField] private AudioClip oxyTankPickedUpClip;
+    [SerializeField] private AudioClip fuelTankPickedUpClip;
+
 
 
     // Start is called before the first frame update
@@ -25,11 +29,32 @@ public class AudioController : MonoBehaviour
 
     public void OnFuelDepleted()
     {
-        oneShotAudioSource.PlayOneShot(fuelTankDepletedClip);
+        PlayOneShotClipAlteredPitch(fuelTankDepletedClip);
     }
 
     public void OnOxyDepleted()
     {
-        oneShotAudioSource.PlayOneShot(oxyTankDepletedClip);
+        PlayOneShotClipAlteredPitch(oxyTankDepletedClip);
+    }
+
+    public void OnAsteroidHit()
+    {
+        PlayOneShotClipAlteredPitch(asteroidHitClip);
+    }
+
+    public void OnOxyTankPickedUp()
+    {
+        PlayOneShotClipAlteredPitch(oxyTankPickedUpClip);
+    }
+
+    public void OnFuelTankPickedUp()
+    {
+        PlayOneShotClipAlteredPitch(fuelTankPickedUpClip);
+    }
+
+    private void PlayOneShotClipAlteredPitch(AudioClip ac)
+    {
+        oneShotAudioSource.pitch = Random.Range(0.9f, 1.1f);
+        oneShotAudioSource.PlayOneShot(ac);
     }
 }

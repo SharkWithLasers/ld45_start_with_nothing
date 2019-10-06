@@ -77,6 +77,8 @@ MonoBehaviour:
     _useConstant: 0
     _constantValue: 0
     _variable: {fileID: 11400000, guid: 572f3d3f7a36149f890ae167c8d312e1, type: 2}
+  pickupTextPrefab: {fileID: 4928115265858347099, guid: 5add4216e28cd4c9693f8bc8a11117a5,
+    type: 3}
 --- !u!1 &3881224805329647623
 GameObject:
   m_ObjectHideFlags: 0

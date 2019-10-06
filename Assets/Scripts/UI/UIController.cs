@@ -87,7 +87,7 @@ public class UIController : MonoBehaviour
                     ? "Hit An Asteroid :("
                     : "Oxygen Depleted :(";
 
-            levelLostText.text = $"{levelLostReasonText}\n\nPress R to Retry";
+            levelLostText.text = $"{levelLostReasonText}\n\nPress 'R' to Retry";
         }
 
         levelLostUI.SetActive(val);
