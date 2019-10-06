@@ -9,6 +9,8 @@ public class LevelController : MonoBehaviour
 
     //ugh
     [SerializeField] private GameObject player;
+    [SerializeField] private MinimapCamera mmCamera;
+
 
     [SerializeField] private GameEvent LevelStartedEvent;
     [SerializeField] private GameEvent LevelWonEvent;
@@ -42,7 +44,7 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void StartLevel(bool shouldBeEasier = false)
     {
-        levelGen.GenerateLevel(player);
+        levelGen.GenerateLevel(player, mmCamera);
 
         //set player to proper place (perhaps this should be in player script lol, or levelGen?)
 
