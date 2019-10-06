@@ -273,6 +273,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelGen: {fileID: 11400000, guid: b660be007deb74a48b89d62aa82138f1, type: 2}
+  player: {fileID: 1133085257}
+  LevelStartedEvent: {fileID: 11400000, guid: 118cf616a8b73452bab13d35d58bb791, type: 2}
   LevelWonEvent: {fileID: 11400000, guid: 32165368f899743d293ac96b8c241446, type: 2}
   LevelLostEvent: {fileID: 11400000, guid: 8ed9f36ed89b947829cf395c6615d243, type: 2}
 --- !u!114 &48504355
@@ -1331,7 +1333,7 @@ PrefabInstance:
     - target: {fileID: 4290587938077626061, guid: 3154d393a65d644768d2e4d702b93a2d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4290587938077626062, guid: 3154d393a65d644768d2e4d702b93a2d,
         type: 3}
@@ -1597,6 +1599,7 @@ GameObject:
   - component: {fileID: 1133085264}
   - component: {fileID: 1133085267}
   - component: {fileID: 1133085266}
+  - component: {fileID: 1133085268}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -1796,6 +1799,7 @@ MonoBehaviour:
     _useConstant: 0
     _constantValue: 0
     _variable: {fileID: 11400000, guid: 8d7bfed7b2c914215bdf0c978e364b70, type: 2}
+  initialFuel: 0
 --- !u!114 &1133085265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1915,6 +1919,53 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1133085258}
         m_MethodName: OnLevelEnded
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1133085268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133085257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5758ca93461aeeb4589456a052b07d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeveloperDescription:
+    _value: 
+  _showDebugFields: 0
+  _enableGizmoDebugging: 1
+  _debugColor: {r: 0, g: 1, b: 1, a: 1}
+  _previouslyRegisteredEvent: {fileID: 11400000, guid: 118cf616a8b73452bab13d35d58bb791,
+    type: 2}
+  _event: {fileID: 11400000, guid: 118cf616a8b73452bab13d35d58bb791, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1133085263}
+        m_MethodName: OnLevelStarted
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1133085258}
+        m_MethodName: OnLevelStart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2448,6 +2499,7 @@ GameObject:
   - component: {fileID: 1670702197}
   - component: {fileID: 1670702199}
   - component: {fileID: 1670702200}
+  - component: {fileID: 1670702201}
   m_Layer: 0
   m_Name: UIController
   m_TagString: Untagged
@@ -2548,6 +2600,42 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1670702197}
         m_MethodName: OnLevelLost
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1670702201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670702196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5758ca93461aeeb4589456a052b07d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeveloperDescription:
+    _value: 
+  _showDebugFields: 0
+  _enableGizmoDebugging: 1
+  _debugColor: {r: 0, g: 1, b: 1, a: 1}
+  _previouslyRegisteredEvent: {fileID: 11400000, guid: 118cf616a8b73452bab13d35d58bb791,
+    type: 2}
+  _event: {fileID: 11400000, guid: 118cf616a8b73452bab13d35d58bb791, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1670702197}
+        m_MethodName: OnLevelStarted
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2696,6 +2784,7 @@ GameObject:
   - component: {fileID: 1784270803}
   - component: {fileID: 1784270805}
   - component: {fileID: 1784270804}
+  - component: {fileID: 1784270806}
   m_Layer: 0
   m_Name: ship_render
   m_TagString: Untagged
@@ -2798,6 +2887,42 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1784270803}
         m_MethodName: OnLevelEnded
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1784270806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784270801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5758ca93461aeeb4589456a052b07d74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DeveloperDescription:
+    _value: 
+  _showDebugFields: 0
+  _enableGizmoDebugging: 1
+  _debugColor: {r: 0, g: 1, b: 1, a: 1}
+  _previouslyRegisteredEvent: {fileID: 11400000, guid: 118cf616a8b73452bab13d35d58bb791,
+    type: 2}
+  _event: {fileID: 11400000, guid: 118cf616a8b73452bab13d35d58bb791, type: 2}
+  _response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1784270803}
+        m_MethodName: OnLevelStarted
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

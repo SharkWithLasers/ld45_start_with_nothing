@@ -16,19 +16,31 @@ public class UIController : MonoBehaviour
 
 
     private bool minimapOn = false;
+    private bool canInteract;
 
     // Start is called before the first frame update
     void Start()
+    {
+        InitialLevelUI();
+    }
+
+    void InitialLevelUI()
     {
         minimapOn = false;
         SetMinimapTo(minimapOn);
         levelWonUI.SetActive(false);
         SetLevelLostUITo(false);
+        canInteract = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!canInteract)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.M))
         {
             SetMinimapTo(!minimapOn);
@@ -48,6 +60,7 @@ public class UIController : MonoBehaviour
         SetLevelLostUITo(false);
 
         levelWonUI.SetActive(true);
+        canInteract = false;
     }
 
     public void OnLevelLost()
@@ -56,7 +69,13 @@ public class UIController : MonoBehaviour
         levelWonUI.SetActive(false);
 
         SetLevelLostUITo(true);
+        canInteract = false;
     }
+
+    public void OnLevelStarted()
+    {
+        InitialLevelUI();
+    }    
 
     void SetLevelLostUITo(bool val)
     {

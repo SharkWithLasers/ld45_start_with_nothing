@@ -32,18 +32,23 @@ public class LevelGenerator : ScriptableObject
 
     [SerializeField] private FloatReference oxytankSeconds;
 
-    //[SerializeField] public List<PickupItem> pickupItems; 
 
+
+    //[SerializeField] public List<PickupItem> pickupItems; 
+    private List<GameObject> curGameObjects;
 
     private float distanceToOxyTank;
 
     public void OnEnable()
     {
+        curGameObjects = new List<GameObject>();
         //pickupItems = new List<PickupItem>();
     }
 
-    public void GenerateLevel()
+    public void GenerateLevel(GameObject player)
     {
+        ClearPreviousShit();
+
         distanceToOxyTank = oxytankSeconds * assumedMinAvgVelocityBetweenOxygenTanks;
 
 
@@ -64,6 +69,7 @@ public class LevelGenerator : ScriptableObject
                 pickupType = PickupType.OxyTank,
                 pickupPosition = nextOxyTankLocation
             });*/
+            curGameObjects.Add(oxyTankGO);
 
             curPosition = nextOxyTankLocation;
         }
@@ -72,6 +78,18 @@ public class LevelGenerator : ScriptableObject
 
         var planetLocation = curPosition + (Vector3) nextDir * distanceToOxyTank;
 
-        Instantiate(planetPrefab, planetLocation, Quaternion.identity);
+        var planetGO = Instantiate(planetPrefab, planetLocation, Quaternion.identity);
+        curGameObjects.Add(planetGO);
+        player.transform.position = new Vector3(-5, 0, 0);
+    }
+
+    private void ClearPreviousShit()
+    {
+        foreach (var go in curGameObjects)
+        {
+            Destroy(go.gameObject);
+        }
+
+        curGameObjects = new List<GameObject>();
     }
 }
