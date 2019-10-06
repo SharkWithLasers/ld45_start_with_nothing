@@ -13,6 +13,11 @@ public class ShipAnimator : MonoBehaviour
     [SerializeField] private float xRotRange = 30;
     [SerializeField] private float zRotRange = 5;
     [SerializeField] private float pureVertZRotRatio = 4;
+
+    [SerializeField] private ParticleSystem deathPS;
+    [SerializeField] private GameObject shipModel;
+
+
     private Dictionary<Vector2, Vector3> velocityDirToTargetRotation;
     private bool levelRunning;
 
@@ -87,8 +92,21 @@ public class ShipAnimator : MonoBehaviour
         levelRunning = false;
     }
 
+    public void OnAsteroidHit()
+    {
+
+        levelRunning = false;
+        shipModel.SetActive(false);
+
+        deathPS.Play();
+
+
+    }
+
     public void OnLevelStarted()
     {
+        shipModel.SetActive(true);
+
         levelRunning = true;
         prevHorzNonzeroInput = Option<float>.None;
         prevVertInput = Option<float>.None;
