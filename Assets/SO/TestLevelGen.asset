@@ -26,9 +26,9 @@ MonoBehaviour:
   - {fileID: 48776611311074511, guid: a1861ac3d448b4f69a530dcfef7e4387, type: 3}
   debugMainAsteroidFieldSize: {x: 300, y: 300}
   debugPlayerStartPoint: {x: -15, y: 0}
-  asteroidsDebugNum: 500
-  gasTanksDebugNum: 20
-  oxyTanksDebugNum: 20
+  asteroidsDebugNum: 1000
+  gasTanksDebugNum: 25
+  oxyTanksDebugNum: 25
   assumedVelocity:
     _useConstant: 0
     _constantValue: 0
