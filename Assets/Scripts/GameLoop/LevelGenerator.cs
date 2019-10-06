@@ -9,7 +9,12 @@ using Random = UnityEngine.Random;
 public struct DifficultySettings
 {
     public float asteroidFieldSize;
+
     public float playerStartPointX;
+    public float initialOxygen;
+    public float initialFuel;
+
+
     public int numAsteroids;
     public int numGasTanks;
     public int numOxyTanks;
@@ -23,7 +28,12 @@ public class LevelGenerator : ScriptableObject
     [SerializeField] private GameObject planetPrefab;
     [SerializeField] private GameObject oxytankPrefab;
     [SerializeField] private GameObject fuelPrefab;
+    [SerializeField] private GameObject firstFuelPrefab;
+
     [SerializeField] private GameObject[] asteroidPrefabs;
+
+    [SerializeField] private FloatReference playerOxygen;
+    [SerializeField] private FloatReference playerFuel;
 
 
     [SerializeField] private Vector2 debugMainAsteroidFieldSize;
@@ -46,9 +56,10 @@ public class LevelGenerator : ScriptableObject
         Debug.Log("on enable called for so");
         curGameObjects = new List<GameObject>();
         curDifficultySettings = initialDifficultySettings;
-    } 
+    }
 
-    public void GenerateLevel(GameObject player, MinimapCamera mmCamera, Option<bool> shouldBeEasier)
+    public void GenerateLevel(GameObject player, MinimapCamera mmCamera, Option<bool> shouldBeEasier,
+        bool isTutorialLevel)
     {
         ClearPreviousShit();
 
@@ -61,7 +72,7 @@ public class LevelGenerator : ScriptableObject
             ? GetDifficultySettingsFromDebug()
             : curDifficultySettings;
 
-        UseHaltonSequenceMethod(player, mmCamera, difficultySettingsToUse);
+        UseHaltonSequenceMethod(player, mmCamera, difficultySettingsToUse, isTutorialLevel);
     }
 
     private void AdjustDifficultySettings(bool shouldBeEaiser)
@@ -120,16 +131,32 @@ public class LevelGenerator : ScriptableObject
     private void UseHaltonSequenceMethod(
         GameObject player,
         MinimapCamera mmCamera,
-        DifficultySettings ds)
+        DifficultySettings ds,
+        bool isTutorialLevel)
     {
         Debug.Log($"numast:{ds.numAsteroids}..numGt:{ds.numGasTanks}..numOt:{ds.numOxyTanks}");
 
-        // always put a fuel tank at 0,0
-        var fuelGO = Instantiate(fuelPrefab);
+        // always put a fuel tank at 0,-1
+        var fuelGO = Instantiate(firstFuelPrefab, new Vector3(-1, 0, 1f), Quaternion.identity);
+        //fuelGO.GetComponent<Fuel>
         curGameObjects.Add(fuelGO);
 
         // and start player at...some sorta start point ... -20? (10 seconds.. at 2 units/second)
-        player.transform.position = new Vector3(ds.playerStartPointX, 0f, 0f);
+        if (isTutorialLevel)
+        {
+            player.transform.position = new Vector3(ds.playerStartPointX, 0f, 0f);
+            playerOxygen.Value = ds.initialOxygen;
+            playerFuel.Value = ds.initialFuel;
+            //player.transform.position = new Vector3(ds.playerStartPointX - 20f, 0f, 0f);
+            //playerOxygen.Value = ds.initialOxygen + 15f;
+            //playerFuel.Value = ds.initialFuel;
+        } else
+        {
+            player.transform.position = new Vector3(ds.playerStartPointX, 0f, 0f);
+            playerOxygen.Value = ds.initialOxygen;
+            playerFuel.Value = ds.initialFuel;
+        }
+        
 
         // place the planet somewhere just outside 
         var planetLocation = new Vector3(

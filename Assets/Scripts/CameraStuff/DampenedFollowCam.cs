@@ -26,6 +26,7 @@ public class DampenedFollowCam : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+
         var objectCurSpeed = objectVelocity.Value.magnitude;
         var objectVelocityDir = objectVelocity.Value.normalized;
 

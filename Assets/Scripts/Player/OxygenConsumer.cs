@@ -47,6 +47,6 @@ public class OxygenConsumer : MonoBehaviour
     public void OnLevelStart()
     {
         shouldBeDepleting = true;
-        oxygenLeft.Value = initialOxygen;
+        //oxygenLeft.Value = initialOxygen;
     }
 }

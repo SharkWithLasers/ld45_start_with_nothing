@@ -7,6 +7,8 @@ public class FuelDepletedText : MonoBehaviour
 {
     private TraumatibleCamera _traumatible;
 
+    [SerializeField] private float timeUntilDeath = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +22,7 @@ public class FuelDepletedText : MonoBehaviour
     {
         _traumatible.Traumatize();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(timeUntilDeath);
 
         Destroy(this.gameObject);
     }
