@@ -26,6 +26,6 @@ public class FuelIntaker : MonoBehaviour
     public void OnFuelDepleted()
     {
         var fuelDepletedGO = Instantiate(fuelDepletedTextPrefab, transform);
-        fuelDepletedGO.transform.localPosition = new Vector3(0, 0.5f, 0);
+        fuelDepletedGO.transform.localPosition = new Vector3(0, 0.6f, 0);
     }
 }
