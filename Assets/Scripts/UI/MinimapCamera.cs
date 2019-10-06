@@ -7,7 +7,7 @@ public class MinimapCamera : MonoBehaviour
     private Camera _camera;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _camera = GetComponent<Camera>();
     }
