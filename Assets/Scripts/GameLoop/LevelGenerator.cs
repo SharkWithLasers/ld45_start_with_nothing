@@ -9,7 +9,12 @@ using Random = UnityEngine.Random;
 public struct DifficultySettings
 {
     public float asteroidFieldSize;
+
     public float playerStartPointX;
+    public float initialOxygen;
+    public float initialFuel;
+
+
     public int numAsteroids;
     public int numGasTanks;
     public int numOxyTanks;
@@ -24,6 +29,9 @@ public class LevelGenerator : ScriptableObject
     [SerializeField] private GameObject oxytankPrefab;
     [SerializeField] private GameObject fuelPrefab;
     [SerializeField] private GameObject[] asteroidPrefabs;
+
+    [SerializeField] private FloatReference playerOxygen;
+    [SerializeField] private FloatReference playerFuel;
 
 
     [SerializeField] private Vector2 debugMainAsteroidFieldSize;
@@ -130,6 +138,8 @@ public class LevelGenerator : ScriptableObject
 
         // and start player at...some sorta start point ... -20? (10 seconds.. at 2 units/second)
         player.transform.position = new Vector3(ds.playerStartPointX, 0f, 0f);
+        playerOxygen.Value = ds.initialOxygen;
+        playerFuel.Value = ds.initialFuel;
 
         // place the planet somewhere just outside 
         var planetLocation = new Vector3(

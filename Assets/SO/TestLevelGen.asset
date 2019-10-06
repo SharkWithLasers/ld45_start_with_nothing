@@ -23,6 +23,14 @@ MonoBehaviour:
   - {fileID: 4290587938077626061, guid: 3154d393a65d644768d2e4d702b93a2d, type: 3}
   - {fileID: 7677616834605869986, guid: e8b3d0da6da2947af996f8304a8b9e50, type: 3}
   - {fileID: 48776611311074511, guid: a1861ac3d448b4f69a530dcfef7e4387, type: 3}
+  playerOxygen:
+    _useConstant: 0
+    _constantValue: 0
+    _variable: {fileID: 11400000, guid: 87f4a6691fce043e1826bc133b19cf80, type: 2}
+  playerFuel:
+    _useConstant: 0
+    _constantValue: 0
+    _variable: {fileID: 11400000, guid: 13cd5489b61d5483ca90628f707340ba, type: 2}
   debugMainAsteroidFieldSize: {x: 300, y: 300}
   debugPlayerStartPoint: {x: -20, y: 0}
   asteroidsDebugNum: 1000
@@ -30,7 +38,9 @@ MonoBehaviour:
   oxyTanksDebugNum: 25
   initialDifficultySettings:
     asteroidFieldSize: 300
-    playerStartPointX: -17.5
+    playerStartPointX: -12.5
+    initialOxygen: 30
+    initialFuel: 0
     numAsteroids: 800
     numGasTanks: 40
     numOxyTanks: 40

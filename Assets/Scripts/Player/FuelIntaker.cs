@@ -20,7 +20,7 @@ public class FuelIntaker : MonoBehaviour
 
     public void OnLevelStart()
     {
-        currentFuel.Value = initialFuel;
+        //currentFuel.Value = initialFuel;
     }
 
     public void OnFuelDepleted()

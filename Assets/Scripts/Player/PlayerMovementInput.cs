@@ -149,7 +149,6 @@ public class PlayerMovementInput : MonoBehaviour
     {
         mostRecentHorzX = 1f;
         currentPlayerDriftVelocity.Value = initialDriftVelocity;
-        fuelInSeconds.Value = 0f;
         levelRunning = true;
     }
 }

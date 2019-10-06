@@ -53,7 +53,7 @@ public class LevelController : MonoBehaviour
 
     IEnumerator ChillThenGenLevel(Option<bool> shouldBeEasier)
     {
-        yield return new WaitForSeconds(0.33f);
+        yield return new WaitForSeconds(0.1f);
 
         levelGen.GenerateLevel(player, mmCamera, shouldBeEasier);
 
