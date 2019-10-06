@@ -1,77 +1,151 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ScriptableObjectArchitecture;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum PickupType
-{
-    OxyTank,
-    Fuel
-}
-
-[Serializable]
-public class PickupItem
-{
-    public PickupType pickupType;
-    public Vector2 pickupPosition;
-}
-
 [CreateAssetMenu(menuName = "SO/GameLoop/LevelGenerator")]
 public class LevelGenerator : ScriptableObject
 {
-    [SerializeField] private FloatReference assumedVelocity;
-    [SerializeField] private FloatReference driftAcceleration;
-
-    [SerializeField] private FloatReference assumedMinAvgVelocityBetweenOxygenTanks;
-    [SerializeField] private IntReference numOxytankDistanceToGoal;
+    [SerializeField] private bool isDebug = true;
 
     [SerializeField] private GameObject planetPrefab;
     [SerializeField] private GameObject oxytankPrefab;
     [SerializeField] private GameObject fuelPrefab;
+    [SerializeField] private GameObject[] asteroidPrefabs;
 
-    [SerializeField] private FloatReference oxytankSeconds;
 
-    //[SerializeField] public List<PickupItem> pickupItems; 
+    [SerializeField] private Vector2 debugMainAsteroidFieldSize;
+    [SerializeField] private Vector2 debugPlayerStartPoint = Vector2.left * 15f;
+    [SerializeField] private int asteroidsDebugNum;
+    [SerializeField] private int gasTanksDebugNum;
+    [SerializeField] private int oxyTanksDebugNum;
 
+
+    private List<GameObject> curGameObjects;
 
     private float distanceToOxyTank;
 
     public void OnEnable()
     {
-        //pickupItems = new List<PickupItem>();
+        curGameObjects = new List<GameObject>();
     }
 
-    public void GenerateLevel()
+    public void GenerateLevel(GameObject player, MinimapCamera mmCamera)
     {
-        distanceToOxyTank = oxytankSeconds * assumedMinAvgVelocityBetweenOxygenTanks;
+        ClearPreviousShit();
 
+        UseHaltonSequenceMethod(player, mmCamera);
+    }
 
-        // start fuel...
-        var curPosition = new Vector3(10, 0, 1);
+    private void UseHaltonSequenceMethod(GameObject player, MinimapCamera mmCamera)
+    {
+        // always put a fuel tank at 0,0
+        var fuelGO = Instantiate(fuelPrefab);
+        curGameObjects.Add(fuelGO);
 
-        for (var i = 0; i < numOxytankDistanceToGoal.Value; i++)
+        // and start player at...some sorta start point ... -20? (10 seconds.. at 2 units/second)
+        player.transform.position = debugPlayerStartPoint;
+
+        // place the planet somewhere just outside 
+        var planetLocation = new Vector3(
+            debugMainAsteroidFieldSize.x + 20f,
+            Random.Range(debugMainAsteroidFieldSize.y * -0.45f, debugMainAsteroidFieldSize.y * 0.45f),
+            1);
+
+        var planetGO = Instantiate(planetPrefab, planetLocation, Quaternion.identity);
+        curGameObjects.Add(planetGO);
+
+        //minimap camera
+        mmCamera.SetupMinimapSizing(debugMainAsteroidFieldSize.x);
+
+        // then do the halton sequence stuff
+        GenerateObjectsByHaltonSequence(asteroidsDebugNum, gasTanksDebugNum, oxyTanksDebugNum, debugMainAsteroidFieldSize);
+
+        //then fill in other portions randomly?
+
+    }
+
+    void GenerateObjectsByHaltonSequence(int numAsteroids, int numGasTanks, int numOxyTanks, Vector2 asteroidFieldSize)
+    {
+        //drop the first 0-20 values
+        var goNumber = (int) (Random.value * 20);
+
+        var lowPrimes = new List<int> { 2, 3, 5, 7 }.OrderBy(x => Random.value).ToList();
+        var xPrime = lowPrimes[0];
+        var yPrime = lowPrimes[1];
+
+        Debug.Log($"{goNumber} {xPrime} {yPrime}");
+
+        //var goNumber = 0;
+
+        for (int i = 0; i < numAsteroids; i++)
         {
-            var direction = new Vector2(Random.value, Random.value).normalized;
+            var location = new Vector3(
+                GetHaltonSequenceNumber(goNumber, xPrime) * asteroidFieldSize.x,
+                GetHaltonSequenceNumber(goNumber, yPrime) * asteroidFieldSize.y - asteroidFieldSize.y/2,
+                1f);
 
-            var nextOxyTankLocation = curPosition + (Vector3) direction * distanceToOxyTank;
+            var asteroidPrefabIndex = Mathf.Min(
+                (int)(Random.value * asteroidPrefabs.Length),
+                asteroidPrefabs.Length - 1);
+            
 
-            var oxyTankGO = Instantiate(oxytankPrefab, nextOxyTankLocation, Quaternion.identity);
-            //oxyTankGO.GetComponent<Pickupable>().pickupAmt = oxytankSeconds.Value;
-            /*
-            pickupItems.Add(new PickupItem
-            {
-                pickupType = PickupType.OxyTank,
-                pickupPosition = nextOxyTankLocation
-            });*/
+            var asteroidGO = Instantiate(asteroidPrefabs[asteroidPrefabIndex], location, Quaternion.identity);
+            curGameObjects.Add(asteroidGO);
 
-            curPosition = nextOxyTankLocation;
+            goNumber++;
         }
 
-        var nextDir = new Vector2(Random.value, Random.value).normalized;
+        for (int i = 0; i < numGasTanks; i++)
+        {
+            var location = new Vector3(
+                GetHaltonSequenceNumber(goNumber, xPrime) * asteroidFieldSize.x,
+                GetHaltonSequenceNumber(goNumber, yPrime) * asteroidFieldSize.y - asteroidFieldSize.y / 2,
+                1f);
 
-        var planetLocation = curPosition + (Vector3) nextDir * distanceToOxyTank;
+            var gtGO = Instantiate(fuelPrefab, location, Quaternion.identity);
+            curGameObjects.Add(gtGO);
+            goNumber++;
+        }
 
-        Instantiate(planetPrefab, planetLocation, Quaternion.identity);
+        for (int i = 0; i < numOxyTanks; i++)
+        {
+            var location = new Vector3(
+                GetHaltonSequenceNumber(goNumber, xPrime) * asteroidFieldSize.x,
+                GetHaltonSequenceNumber(goNumber, yPrime) * asteroidFieldSize.y - asteroidFieldSize.y / 2,
+                1f);
+
+            var otGO = Instantiate(oxytankPrefab, location, Quaternion.identity);
+            curGameObjects.Add(otGO);
+
+            goNumber++;
+        }
+    }
+
+    private void ClearPreviousShit()
+    {
+        foreach (var go in curGameObjects)
+        {
+            Destroy(go.gameObject);
+        }
+
+        curGameObjects = new List<GameObject>();
+    }
+
+    private static float GetHaltonSequenceNumber(int index, int basePrime)
+    {
+        var f = 1f;
+        var r = 0f;
+
+        while (index > 0)
+        {
+            f /= basePrime;
+            r += f * (index % basePrime);
+            index /= basePrime;
+        }
+
+        return r;
     }
 }

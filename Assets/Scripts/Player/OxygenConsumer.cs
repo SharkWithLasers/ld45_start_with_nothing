@@ -11,12 +11,11 @@ public class OxygenConsumer : MonoBehaviour
     [SerializeField] private GameEvent OxygenDepletedEvent;
 
     [SerializeField] private float initialOxygen = 30f;
-    private bool shouldBeDepleting = true;
+    private bool shouldBeDepleting = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        oxygenLeft.Value = initialOxygen;
     }
 
     // Update is called once per frame
@@ -43,5 +42,11 @@ public class OxygenConsumer : MonoBehaviour
     public void OnLevelEnded()
     {
         shouldBeDepleting = false;
+    }
+
+    public void OnLevelStart()
+    {
+        shouldBeDepleting = true;
+        oxygenLeft.Value = initialOxygen;
     }
 }

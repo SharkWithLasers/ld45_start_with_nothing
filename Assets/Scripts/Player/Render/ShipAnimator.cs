@@ -14,14 +14,12 @@ public class ShipAnimator : MonoBehaviour
     [SerializeField] private float zRotRange = 5;
     [SerializeField] private float pureVertZRotRatio = 4;
     private Dictionary<Vector2, Vector3> velocityDirToTargetRotation;
-    private bool levelEnded;
+    private bool levelRunning;
 
 
     // Start is called before the first frame update
     void Awake()
     {
-        levelEnded = false;
-
         velocityDirToTargetRotation = new Dictionary<Vector2, Vector3>
         {
             { new Vector2(1, 0), new Vector3(0, 0, 0) },
@@ -36,7 +34,7 @@ public class ShipAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (levelEnded)
+        if (!levelRunning)
         {
             return;
         }
@@ -86,6 +84,13 @@ public class ShipAnimator : MonoBehaviour
 
     public void OnLevelEnded()
     {
-        levelEnded = true;
+        levelRunning = false;
+    }
+
+    public void OnLevelStarted()
+    {
+        levelRunning = true;
+        prevHorzNonzeroInput = Option<float>.None;
+        prevVertInput = Option<float>.None;
     }
 }

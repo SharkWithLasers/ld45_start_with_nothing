@@ -12,29 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8daea94313d4973bc8f593ff6c8629, type: 3}
   m_Name: TestLevelGen
   m_EditorClassIdentifier: 
-  assumedVelocity:
-    _useConstant: 0
-    _constantValue: 0
-    _variable: {fileID: 0}
-  driftAcceleration:
-    _useConstant: 0
-    _constantValue: 0
-    _variable: {fileID: 0}
-  assumedMinAvgVelocityBetweenOxygenTanks:
-    _useConstant: 1
-    _constantValue: 1
-    _variable: {fileID: 0}
-  numOxytankDistanceToGoal:
-    _useConstant: 1
-    _constantValue: 4
-    _variable: {fileID: 0}
+  isDebug: 1
   planetPrefab: {fileID: 653251084998193093, guid: c9ecbfd16c8b840a98e2c6348b3a3a4c,
     type: 3}
   oxytankPrefab: {fileID: 1459433973913705459, guid: 1adc5d8235caf4d65adf6ee5f97d17e8,
     type: 3}
   fuelPrefab: {fileID: 6369474011399188711, guid: e0ac2b7a5998945faba8e59f24bbb3df,
     type: 3}
-  oxytankSeconds:
-    _useConstant: 1
-    _constantValue: 30
-    _variable: {fileID: 0}
+  asteroidPrefabs:
+  - {fileID: 4290587938077626061, guid: 3154d393a65d644768d2e4d702b93a2d, type: 3}
+  - {fileID: 7677616834605869986, guid: e8b3d0da6da2947af996f8304a8b9e50, type: 3}
+  - {fileID: 48776611311074511, guid: a1861ac3d448b4f69a530dcfef7e4387, type: 3}
+  debugMainAsteroidFieldSize: {x: 300, y: 300}
+  debugPlayerStartPoint: {x: -17.5, y: 0}
+  asteroidsDebugNum: 1000
+  gasTanksDebugNum: 25
+  oxyTanksDebugNum: 25

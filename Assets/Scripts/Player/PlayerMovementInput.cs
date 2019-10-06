@@ -25,13 +25,12 @@ public class PlayerMovementInput : MonoBehaviour
     private float mostRecentHorzX;
     private Option<Vector2> prevDirection = Option<Vector2>.None;
 
-    private bool levelRunning = true;
+    private bool levelRunning = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        mostRecentHorzX = 1f;
-        currentPlayerDriftVelocity.Value = initialDriftVelocity;
+
     }
 
     // Update is called once per frame
@@ -130,5 +129,13 @@ public class PlayerMovementInput : MonoBehaviour
     {
         levelRunning = false;
         currentPlayerDriftVelocity.Value = Vector2.zero;
+    }
+
+    public void OnLevelStarted()
+    {
+        mostRecentHorzX = 1f;
+        currentPlayerDriftVelocity.Value = initialDriftVelocity;
+        fuelInSeconds.Value = 0f;
+        levelRunning = true;
     }
 }

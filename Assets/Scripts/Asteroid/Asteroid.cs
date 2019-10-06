@@ -21,7 +21,6 @@ public class Asteroid : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         asteroidCollisionEvent.Raise();
-        Debug.Log("asteroid hit yo");
         //_bc.enabled = false;
     }
 }
