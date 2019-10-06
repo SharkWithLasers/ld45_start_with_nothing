@@ -76,6 +76,8 @@ public class LevelGenerator : ScriptableObject
         var xPrime = lowPrimes[0];
         var yPrime = lowPrimes[1];
 
+        Debug.Log($"{goNumber} {xPrime} {yPrime}");
+
         //var goNumber = 0;
 
         for (int i = 0; i < numAsteroids; i++)

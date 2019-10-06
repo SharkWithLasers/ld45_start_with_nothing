@@ -1487,7 +1487,7 @@ MonoBehaviour:
     _variable: {fileID: 11400000, guid: e67412b5f946549608bf90f9bc42ed5f, type: 2}
   OxygenDepletedEvent: {fileID: 11400000, guid: 13cb09bed3e3146409e8cf7b52b798b1,
     type: 2}
-  initialOxygen: 30
+  initialOxygen: 35
 --- !u!61 &1133085259
 BoxCollider2D:
   m_ObjectHideFlags: 0
