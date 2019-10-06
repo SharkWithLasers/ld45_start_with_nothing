@@ -37,7 +37,7 @@ public class PlayerMovementInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        OnIntro();
     }
 
     // Update is called once per frame
@@ -150,5 +150,13 @@ public class PlayerMovementInput : MonoBehaviour
         mostRecentHorzX = 1f;
         currentPlayerDriftVelocity.Value = initialDriftVelocity;
         levelRunning = true;
+    }
+
+    private void OnIntro()
+    {
+        mostRecentHorzX = 1f;
+        currentPlayerDriftVelocity.Value = initialDriftVelocity;
+        thruster.TryStartThrusting();
+        levelRunning = false;
     }
 }

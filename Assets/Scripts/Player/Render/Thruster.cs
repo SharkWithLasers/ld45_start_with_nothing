@@ -50,6 +50,28 @@ public class Thruster : MonoBehaviour
         TryStopThrusting();
     }
 
+    public IEnumerator ThrusterSputsOut()
+    {
+        TryStopThrusting();
+
+        yield return new WaitForSeconds(0.5f);
+
+        TryStartThrusting();
+
+        yield return new WaitForSeconds(0.25f);
+
+        TryStopThrusting();
+
+        yield return new WaitForSeconds(0.3f);
+
+
+        TryStartThrusting();
+
+        yield return new WaitForSeconds(0.15f);
+
+        TryStopThrusting();
+    }
+
     IEnumerator PeriodicallyFuckWithThrusterPitch()
     {
         while (true)

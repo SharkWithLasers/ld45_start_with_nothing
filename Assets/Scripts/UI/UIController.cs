@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
+
 public class UIController : MonoBehaviour
 {
     [SerializeField] private LevelController levelController;
@@ -13,6 +15,17 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject levelLostUI;
 
     [SerializeField] private GameObject levelWonUI;
+    [SerializeField] private GameObject fuelGauge;
+    [SerializeField] private GameObject oxygenGauge;
+
+
+
+
+    [SerializeField] private GameObject introScreenUI;
+    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI instructionsText;
+
+    [SerializeField] private TextMeshProUGUI tutorialText;
 
 
     private bool minimapOn = false;
@@ -21,16 +34,39 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitialLevelUI();
+        IntroScreenUI();
+    }
+
+    void IntroScreenUI()
+    {
+        introScreenUI.SetActive(true);
+
+        tutorialText.enabled = false;
+
+
+        minimapOn = false;
+        SetMinimapTo(minimapOn);
+        levelWonUI.SetActive(false);
+        SetLevelLostUITo(false);
+        canInteract = false;
+        fuelGauge.SetActive(false);
+        oxygenGauge.SetActive(false);
     }
 
     void InitialLevelUI()
     {
+        introScreenUI.SetActive(false);
+
+        tutorialText.enabled = false;
+
         minimapOn = false;
         SetMinimapTo(minimapOn);
         levelWonUI.SetActive(false);
         SetLevelLostUITo(false);
         canInteract = true;
+
+        fuelGauge.SetActive(true);
+        oxygenGauge.SetActive(true);
     }
 
     // Update is called once per frame
@@ -91,5 +127,48 @@ public class UIController : MonoBehaviour
         }
 
         levelLostUI.SetActive(val);
+    }
+
+    public void FadeIntroText()
+    {
+        titleText.DOFade(0, 0.75f);
+        instructionsText.DOFade(0, 0.75f);
+    }
+
+    public void ShowTutorialFuelText()
+    {
+        tutorialText.enabled = true;
+        tutorialText.text = "Oh no! we've run out of fuel!";
+        fuelGauge.SetActive(true);
+    }
+
+    public void ShowTutorialOxygenText()
+    {
+        tutorialText.enabled = true;
+        tutorialText.text = "And we'll soon run out of oxygen!";
+        oxygenGauge.SetActive(true);
+    }
+
+    public void ShowTutorialWeMustGetBackToOurHomePlanetText()
+    {
+        tutorialText.enabled = true;
+        tutorialText.text = "We must somehow get back to our home planet";
+    }
+
+    public void ShowTutorialPressMToToggleMapText()
+    {
+        tutorialText.enabled = true;
+        tutorialText.text = "Press 'M' to toggle the map";
+    }
+
+    public void ShowMinimapForTut()
+    {
+        SetMinimapTo(true);
+    }
+
+    public void ShowTutText(string text)
+    {
+        tutorialText.enabled = true;
+        tutorialText.text = text;
     }
 }

@@ -7,6 +7,8 @@ public class LevelController : MonoBehaviour
 {
     [SerializeField] private LevelGenerator levelGen;
 
+    [SerializeField] private TutorialDirector td;
+
     //ugh
     [SerializeField] private GameObject player;
     [SerializeField] private MinimapCamera mmCamera;
@@ -16,11 +18,15 @@ public class LevelController : MonoBehaviour
     [SerializeField] private GameEvent LevelWonEvent;
     [SerializeField] private GameEvent LevelLostEvent;
 
+    [SerializeField] private GameEvent TutorialStartedEvent;
+
+
     [SerializeField] private GameEvent PlayerSelectEvent;
 
     private enum LevelState
     {
-        IntroScreen,
+        IntroSection,
+        TutorialSection,
         LevelLoading,
         LevelStarted,
         LevelLost,
@@ -40,51 +46,67 @@ public class LevelController : MonoBehaviour
 
     private void Start()
     {
-        StartLevel(Option<bool>.None);
+        curState = LevelState.IntroSection;
+
+        //StartLevel(Option<bool>.None, isTutorialLevel: true);
     }
 
     // Start is called before the first frame update
-    void StartLevel(Option<bool> shouldBeEasier)
+    void StartLevel(Option<bool> shouldBeEasier, bool isTutorialLevel)
     {
         curState = LevelState.LevelLoading;
 
-        StartCoroutine(ChillThenGenLevel(shouldBeEasier));
-    }
-
-    IEnumerator ChillThenGenLevel(Option<bool> shouldBeEasier)
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        levelGen.GenerateLevel(player, mmCamera, shouldBeEasier);
+        levelGen.GenerateLevel(player, mmCamera, shouldBeEasier, isTutorialLevel);
 
         //set player to proper place (perhaps this should be in player script lol, or levelGen?)
+        
+        if (!isTutorialLevel)
+        {
+            curState = LevelState.LevelStarted;
+            LevelStartedEvent.Raise();
+        }
 
-        curState = LevelState.LevelStarted;
-
-        LevelStartedEvent.Raise();
+        //StartCoroutine(ChillThenGenLevel(shouldBeEasier));
     }
 
-    void StartNextLevel(bool shouldBeEasier = false)
+    void StartNextLevel(bool shouldBeEasier)
     {
         // fadeout animation
 
         // generate level
-        StartLevel(shouldBeEasier);
+        StartLevel(shouldBeEasier, isTutorialLevel: false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space) && curState == LevelState.IntroSection)
+        {
+            PlayerSelectEvent.Raise();
+
+            td.IntroClicked();
+
+            curState = LevelState.TutorialSection;
+
+            //StartLevel(Option<bool>.None, isTutorialLevel: false);
+            /*
+            PlayerSelectEvent.Raise();
+            //StartNextLevel(shouldBeEasier: false);
+            return;*/
+        }
+
         if (Input.GetKeyDown(KeyCode.R) && curState == LevelState.LevelLost)
         {
             PlayerSelectEvent.Raise();
             StartNextLevel(shouldBeEasier: true);
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && curState == LevelState.LevelWon)
         {
             PlayerSelectEvent.Raise();
             StartNextLevel(shouldBeEasier: false);
+            return;
         }
     }
 
@@ -109,5 +131,18 @@ public class LevelController : MonoBehaviour
         levelLostReason = LevelLostReason.OutOfOxygen;
         curState = LevelState.LevelLost;
         LevelLostEvent.Raise();
+    }
+
+    public void OnTutorialPartOneFinished()
+    {
+        StartLevel(Option<bool>.None, isTutorialLevel: true);
+
+        td.TutLevelLoaded();
+    }
+
+    public void OnTutorialPartTwoFinished()
+    {
+        curState = LevelState.LevelStarted;
+        LevelStartedEvent.Raise();
     }
 }

@@ -19,6 +19,8 @@ MonoBehaviour:
     type: 3}
   fuelPrefab: {fileID: 6369474011399188711, guid: e0ac2b7a5998945faba8e59f24bbb3df,
     type: 3}
+  firstFuelPrefab: {fileID: 4964541634001147851, guid: 1abf427834928431cab57172b12e4157,
+    type: 3}
   asteroidPrefabs:
   - {fileID: 4290587938077626061, guid: 3154d393a65d644768d2e4d702b93a2d, type: 3}
   - {fileID: 7677616834605869986, guid: e8b3d0da6da2947af996f8304a8b9e50, type: 3}
@@ -32,14 +34,14 @@ MonoBehaviour:
     _constantValue: 0
     _variable: {fileID: 11400000, guid: 13cd5489b61d5483ca90628f707340ba, type: 2}
   debugMainAsteroidFieldSize: {x: 300, y: 300}
-  debugPlayerStartPoint: {x: -20, y: 0}
+  debugPlayerStartPoint: {x: -30, y: 0}
   asteroidsDebugNum: 1000
   gasTanksDebugNum: 25
   oxyTanksDebugNum: 25
   initialDifficultySettings:
     asteroidFieldSize: 300
-    playerStartPointX: -12.5
-    initialOxygen: 30
+    playerStartPointX: -20
+    initialOxygen: 32.5
     initialFuel: 0
     numAsteroids: 800
     numGasTanks: 40
