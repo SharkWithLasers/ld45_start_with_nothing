@@ -48,12 +48,15 @@ public class LevelGenerator : ScriptableObject
         curDifficultySettings = initialDifficultySettings;
     } 
 
-    public void GenerateLevel(GameObject player, MinimapCamera mmCamera)
+    public void GenerateLevel(GameObject player, MinimapCamera mmCamera, Option<bool> shouldBeEasier)
     {
         ClearPreviousShit();
 
         // generate difficulty settings
-
+        if (shouldBeEasier.HasValue)
+        {
+            AdjustDifficultySettings(shouldBeEasier.Value);
+        }
         var difficultySettingsToUse = isDebug
             ? GetDifficultySettingsFromDebug()
             : curDifficultySettings;
@@ -61,6 +64,47 @@ public class LevelGenerator : ScriptableObject
         UseHaltonSequenceMethod(player, mmCamera, difficultySettingsToUse);
     }
 
+    private void AdjustDifficultySettings(bool shouldBeEaiser)
+    {
+        if (shouldBeEaiser)
+        {
+            MakeEasier();
+        }
+        else
+        {
+            MakeHarder();
+        }
+    }
+
+    private void MakeEasier()
+    {
+        var shouldIncreaseTanks = Random.value > 0.5f;
+        if (shouldIncreaseTanks)
+        {
+            curDifficultySettings.numGasTanks = Mathf.FloorToInt(curDifficultySettings.numGasTanks * 1.25f);
+            curDifficultySettings.numOxyTanks = Mathf.FloorToInt(curDifficultySettings.numOxyTanks * 1.25f);
+        }
+        else
+        {
+            //should decrease asteroids
+            curDifficultySettings.numAsteroids = Mathf.CeilToInt(curDifficultySettings.numAsteroids / 1.25f);
+        }
+    }
+
+    private void MakeHarder()
+    {
+        var shouldDecreaseTanks = Random.value > 0.5f;
+        if (shouldDecreaseTanks)
+        {
+            curDifficultySettings.numGasTanks = Mathf.CeilToInt(curDifficultySettings.numGasTanks / 1.25f);
+            curDifficultySettings.numOxyTanks = Mathf.CeilToInt(curDifficultySettings.numOxyTanks / 1.25f);
+        }
+        else
+        {
+            //should increase asteroids
+            curDifficultySettings.numAsteroids = Mathf.FloorToInt(curDifficultySettings.numAsteroids * 1.25f);
+        }
+    }
     private DifficultySettings GetDifficultySettingsFromDebug()
     {
         return new DifficultySettings
@@ -74,9 +118,12 @@ public class LevelGenerator : ScriptableObject
     }
 
     private void UseHaltonSequenceMethod(
-        GameObject player,MinimapCamera mmCamera,
+        GameObject player,
+        MinimapCamera mmCamera,
         DifficultySettings ds)
     {
+        Debug.Log($"numast:{ds.numAsteroids}..numGt:{ds.numGasTanks}..numOt:{ds.numOxyTanks}");
+
         // always put a fuel tank at 0,0
         var fuelGO = Instantiate(fuelPrefab);
         curGameObjects.Add(fuelGO);
@@ -112,7 +159,7 @@ public class LevelGenerator : ScriptableObject
         var xPrime = lowPrimes[0];
         var yPrime = lowPrimes[1];
 
-        Debug.Log($"{goNumber} {xPrime} {yPrime}");
+        //Debug.Log($"{goNumber} {xPrime} {yPrime}");
 
         //var goNumber = 0;
 
