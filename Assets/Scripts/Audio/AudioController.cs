@@ -6,12 +6,20 @@ public class AudioController : MonoBehaviour
 {
     [SerializeField] private AudioSource oneShotAudioSource;
 
+    [SerializeField] private AudioSource playerSelectAudioSource;
+
+    //[SerializeField] private AudioSource engineAudioSource;
 
     [SerializeField] private AudioClip fuelTankDepletedClip;
     [SerializeField] private AudioClip oxyTankDepletedClip;
     [SerializeField] private AudioClip asteroidHitClip;
     [SerializeField] private AudioClip oxyTankPickedUpClip;
     [SerializeField] private AudioClip fuelTankPickedUpClip;
+
+    [SerializeField] private AudioClip levelWonClip;
+
+
+    [SerializeField] private AudioClip selectClip;
 
 
 
@@ -56,5 +64,16 @@ public class AudioController : MonoBehaviour
     {
         oneShotAudioSource.pitch = Random.Range(0.9f, 1.1f);
         oneShotAudioSource.PlayOneShot(ac);
+    }
+
+    public void OnPlayerSelect()
+    {
+        playerSelectAudioSource.PlayOneShot(selectClip);
+    }
+
+    public void OnLevelWon()
+    {
+        oneShotAudioSource.pitch = 1f;
+        oneShotAudioSource.PlayOneShot(levelWonClip);
     }
 }

@@ -76,7 +76,7 @@ public class ShipAnimator : MonoBehaviour
             }
 
 
-            shipRender.transform.localRotation = Quaternion.Euler(rotationToUse);
+            transform.localRotation = Quaternion.Euler(rotationToUse);
         }
         else
         {

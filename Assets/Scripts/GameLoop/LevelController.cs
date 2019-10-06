@@ -16,6 +16,8 @@ public class LevelController : MonoBehaviour
     [SerializeField] private GameEvent LevelWonEvent;
     [SerializeField] private GameEvent LevelLostEvent;
 
+    [SerializeField] private GameEvent PlayerSelectEvent;
+
     private enum LevelState
     {
         IntroScreen,
@@ -44,6 +46,15 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void StartLevel(Option<bool> shouldBeEasier)
     {
+        curState = LevelState.LevelLoading;
+
+        StartCoroutine(ChillThenGenLevel(shouldBeEasier));
+    }
+
+    IEnumerator ChillThenGenLevel(Option<bool> shouldBeEasier)
+    {
+        yield return new WaitForSeconds(0.33f);
+
         levelGen.GenerateLevel(player, mmCamera, shouldBeEasier);
 
         //set player to proper place (perhaps this should be in player script lol, or levelGen?)
@@ -66,11 +77,13 @@ public class LevelController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R) && curState == LevelState.LevelLost)
         {
+            PlayerSelectEvent.Raise();
             StartNextLevel(shouldBeEasier: true);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && curState == LevelState.LevelWon)
         {
+            PlayerSelectEvent.Raise();
             StartNextLevel(shouldBeEasier: false);
         }
     }
