@@ -21,6 +21,8 @@ public class PlayerMovementInput : MonoBehaviour
     [SerializeField] private FloatReference minDriftSpeed;
     [SerializeField] private FloatReference maxDriftSpeed;
 
+    [SerializeField] private ParticleSystem thrusterPS;
+
     [SerializeField] private FloatReference acuteDirectionRatio;
     private float mostRecentHorzX;
     private Option<Vector2> prevDirection = Option<Vector2>.None;
@@ -61,6 +63,11 @@ public class PlayerMovementInput : MonoBehaviour
 
         if (accelerateHeld && fuelInSeconds > 0f)
         {
+            if (!thrusterPS.isPlaying)
+            {
+                thrusterPS.Play();
+            }
+
             var inputPressed = Input.GetButtonDown("Up") || Input.GetButtonDown("Right")
                 || Input.GetButtonDown("Left") || Input.GetButtonDown("Down");
 
@@ -102,6 +109,13 @@ public class PlayerMovementInput : MonoBehaviour
             if (Mathf.Approximately(fuelInSeconds.Value, 0f))
             {
                 Debug.Log("fuel is gone");
+            }
+        }
+        else
+        {
+            if (thrusterPS.isPlaying)
+            {
+                thrusterPS.Stop();
             }
         }
 

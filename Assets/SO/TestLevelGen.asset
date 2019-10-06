@@ -31,6 +31,6 @@ MonoBehaviour:
   initialDifficultySettings:
     asteroidFieldSize: 300
     playerStartPointX: -17.5
-    numAsteroids: 750
+    numAsteroids: 800
     numGasTanks: 40
     numOxyTanks: 40
