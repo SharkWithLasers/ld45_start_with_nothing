@@ -10,6 +10,8 @@ public class FuelIntaker : MonoBehaviour
 
     [SerializeField] private float initialFuel = 0f;
 
+    [SerializeField] private GameObject fuelDepletedTextPrefab;
+
     // Update is called once per frame
     public void OnFuelPickedUp(float amt)
     {
@@ -19,5 +21,11 @@ public class FuelIntaker : MonoBehaviour
     public void OnLevelStart()
     {
         currentFuel.Value = initialFuel;
+    }
+
+    public void OnFuelDepleted()
+    {
+        var fuelDepletedGO = Instantiate(fuelDepletedTextPrefab, transform);
+        fuelDepletedGO.transform.localPosition = new Vector3(0, 0.6f, 0);
     }
 }

@@ -206,6 +206,8 @@ MonoBehaviour:
     _useConstant: 0
     _constantValue: 0
     _variable: {fileID: 11400000, guid: c3eb520f1f9e14e17886fc2153b4080c, type: 2}
+  pickupTextPrefab: {fileID: 4928115265858347099, guid: a0f3b54c067f94e378962aa6853c5558,
+    type: 3}
 --- !u!1001 &5308350909877865462
 PrefabInstance:
   m_ObjectHideFlags: 0

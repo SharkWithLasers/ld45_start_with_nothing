@@ -9,6 +9,9 @@ public class Pickupable : MonoBehaviour
     [SerializeField] private FloatGameEvent itemPickedUpEvent;
 
     [SerializeField] private FloatReference pickupAmt;
+
+    [SerializeField] private GameObject pickupTextPrefab;
+
     private BoxCollider2D _bc;
 
     // Start is called before the first frame update
@@ -27,6 +30,7 @@ public class Pickupable : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //assume that the only kinematic rigiy boi is the spaceship
+        Instantiate(pickupTextPrefab, transform.position, Quaternion.identity);
 
         itemPickedUpEvent.Raise(pickupAmt);
         gameObject.SetActive(false);    
