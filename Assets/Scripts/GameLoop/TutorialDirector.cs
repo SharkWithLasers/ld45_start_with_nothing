@@ -105,17 +105,17 @@ public class TutorialDirector : MonoBehaviour
     {
         uiController.ShowMinimapForTut();
 
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(2f);
 
         uiController.ShowTutText("Our Spaceship is in blue");
         tutorialTextEvent.Raise();
 
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(2.4f);
 
         uiController.ShowTutText("Our planet is in red");
         tutorialTextEvent.Raise();
 
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(2.4f);
 
         uiController.ShowTutText("we'll need fuel and oxygen on the way");
         tutorialTextEvent.Raise();
@@ -125,14 +125,14 @@ public class TutorialDirector : MonoBehaviour
         uiController.ShowTutText("If we find fuel, use 'WASD+J' to thrust");
         tutorialTextEvent.Raise();
 
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(3f);
 
-        uiController.ShowTutText("Oh yeah, and watch out for uncharted asteroids");
+        uiController.ShowTutText("Oh yeah, and watch out for asteroids");
         tutorialTextEvent.Raise();
 
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(3f);
 
-        uiController.ShowTutText("Good luck, we are all counting on you");
+        uiController.ShowTutText("Good luck, we are all counting on you!");
         tutorialTextEvent.Raise();
 
         yield return new WaitForSeconds(2.8f);

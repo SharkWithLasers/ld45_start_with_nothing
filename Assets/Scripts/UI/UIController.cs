@@ -18,7 +18,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject fuelGauge;
     [SerializeField] private GameObject oxygenGauge;
 
-
+    [SerializeField] private TextMeshProUGUI mToggleText;
+    [SerializeField] private TextMeshProUGUI wasdJText;
 
 
     [SerializeField] private GameObject introScreenUI;
@@ -44,6 +45,10 @@ public class UIController : MonoBehaviour
         tutorialText.enabled = false;
 
 
+        mToggleText.enabled = false;
+        wasdJText.enabled = false;
+
+        
         minimapOn = false;
         SetMinimapTo(minimapOn);
         levelWonUI.SetActive(false);
@@ -58,6 +63,12 @@ public class UIController : MonoBehaviour
         introScreenUI.SetActive(false);
 
         tutorialText.enabled = false;
+
+        mToggleText.enabled = true;
+        wasdJText.enabled = true;
+
+        mToggleText.alpha = 1f;
+        wasdJText.alpha = 1f;
 
         minimapOn = false;
         SetMinimapTo(minimapOn);
@@ -111,7 +122,17 @@ public class UIController : MonoBehaviour
     public void OnLevelStarted()
     {
         InitialLevelUI();
-    }    
+
+        StartCoroutine(ChillThenFadeText());
+        
+    }
+
+    IEnumerator ChillThenFadeText()
+    {
+        yield return new WaitForSeconds(2f);
+        mToggleText.DOFade(0f, 1.25f);
+        wasdJText.DOFade(0f, 1.25f);
+    }
 
     void SetLevelLostUITo(bool val)
     {
@@ -152,7 +173,7 @@ public class UIController : MonoBehaviour
     public void ShowTutorialWeMustGetBackToOurHomePlanetText()
     {
         tutorialText.enabled = true;
-        tutorialText.text = "We must somehow get back to our home planet";
+        tutorialText.text = "We must somehow get back home!";
     }
 
     public void ShowTutorialPressMToToggleMapText()
