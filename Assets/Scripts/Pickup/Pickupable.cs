@@ -29,7 +29,6 @@ public class Pickupable : MonoBehaviour
         //assume that the only kinematic rigiy boi is the spaceship
 
         itemPickedUpEvent.Raise(pickupAmt);
-        Debug.Log($"picked up {pickupAmt} whatevers");
         _bc.enabled = false;
     }
 }
