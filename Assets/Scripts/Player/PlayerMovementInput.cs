@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class PlayerMovementInput : MonoBehaviour
 {
-    [SerializeField] private BoolReference inDebugMode;
-
     [SerializeField] private FloatReference moveSpeed;
 
     [SerializeField] private FloatReference fuelInSeconds;
@@ -43,11 +41,6 @@ public class PlayerMovementInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (inDebugMode == true)
-        {
-            DebugFlow();
-        }
-
         if (levelRunning)
         {
             DriftModeFlow();
@@ -129,14 +122,6 @@ public class PlayerMovementInput : MonoBehaviour
 
         var displacement = currentPlayerDriftVelocity.Value * Time.deltaTime;
         transform.Translate(displacement);
-    }
-
-    void DebugFlow()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            fuelInSeconds.Value += 5f;
-        }
     }
 
     public void OnLevelEnded()
